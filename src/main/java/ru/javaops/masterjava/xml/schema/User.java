@@ -1,11 +1,14 @@
 
 package ru.javaops.masterjava.xml.schema;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
@@ -23,6 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="fullName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="groupRefs" type="{http://www.w3.org/2001/XMLSchema}IDREFS"/>
  *       &lt;/sequence>
  *       &lt;attribute name="flag" use="required" type="{http://javaops.ru}flagType" />
  *       &lt;attribute name="city" use="required" type="{http://www.w3.org/2001/XMLSchema}IDREF" />
@@ -36,7 +40,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "email",
-    "fullName"
+    "fullName",
+    "groupRefs"
 })
 @XmlRootElement(name = "User", namespace = "http://javaops.ru")
 public class User {
@@ -45,6 +50,11 @@ public class User {
     protected String email;
     @XmlElement(namespace = "http://javaops.ru", required = true)
     protected String fullName;
+    @XmlList
+    @XmlElement(namespace = "http://javaops.ru", required = true)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREFS")
+    protected List<Object> groupRefs;
     @XmlAttribute(name = "flag", required = true)
     protected FlagType flag;
     @XmlAttribute(name = "city", required = true)
@@ -98,6 +108,35 @@ public class User {
      */
     public void setFullName(String value) {
         this.fullName = value;
+    }
+
+    /**
+     * Gets the value of the groupRefs property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the groupRefs property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getGroupRefs().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Object }
+     * 
+     * 
+     */
+    public List<Object> getGroupRefs() {
+        if (groupRefs == null) {
+            groupRefs = new ArrayList<Object>();
+        }
+        return this.groupRefs;
     }
 
     /**
