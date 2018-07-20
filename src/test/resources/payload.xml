@@ -15,7 +15,7 @@
         <User flag="deleted" city="spb">
             <email>mail@yandex.ru</email>
             <fullName>Deleted</fullName>
-            <groupRefs>topjava01 masterjava02</groupRefs>
+            <groupRefs>topjava01</groupRefs>
         </User>
     </Users>
     <Cities>
@@ -32,11 +32,11 @@
         </Project>
     </Projects>
     <Groups>
-        <Group name="topjava01" type="FINISHED" projectName="topjava"/>
-        <Group name="topjava02" type="CURRENT" projectName="topjava"/>
-        <Group name="topjava03" type="REGISTERING" projectName="topjava"/>
-        <Group name="masterjava01" type="FINISHED" projectName="masterjava"/>
-        <Group name="masterjava02" type="CURRENT" projectName="masterjava"/>
-        <Group name="masterjava03" type="REGISTERING" projectName="masterjava"/>
+        <Group name="topjava01" type="FINISHED" project="topjava"/>
+        <Group name="topjava02" type="CURRENT" project="topjava"/>
+        <Group name="topjava03" type="REGISTERING" project="topjava"/>
+        <Group name="masterjava01" type="FINISHED" project="masterjava"/>
+        <Group name="masterjava02" type="CURRENT" project="masterjava"/>
+        <Group name="masterjava03" type="REGISTERING" project="masterjava"/>
     </Groups>
 </Payload>

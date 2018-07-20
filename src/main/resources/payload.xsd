@@ -82,7 +82,7 @@
         <xs:complexType>
             <xs:attribute type="xs:ID" name="name"/>
             <xs:attribute type="groupType" name="type"/>
-            <xs:attribute type="xs:IDREF" name="projectName"/>
+            <xs:attribute type="xs:IDREF" name="project"/>
         </xs:complexType>
     </xs:element>
 
