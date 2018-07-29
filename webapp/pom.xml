@@ -10,27 +10,12 @@
         <relativePath>../parent-web/pom.xml</relativePath>
         <version>1.0-SNAPSHOT</version>
     </parent>
-
-    <artifactId>upload</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Upload</name>
 
-    <build>
-    </build>
+    <artifactId>webapp</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
     <dependencies>
-        <dependency>
-            <groupId>com.j2html</groupId>
-            <artifactId>j2html</artifactId>
-            <version>RELEASE</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-            </exclusions>
-
-        </dependency>
     </dependencies>
+    
 </project>
