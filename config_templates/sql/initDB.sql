@@ -13,3 +13,5 @@ CREATE TABLE users (
   flag      user_flag NOT NULL
 );
 
+CREATE UNIQUE INDEX users_email_uindex ON public.users (email);
+
