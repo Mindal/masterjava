@@ -10,6 +10,12 @@ import ru.javaops.masterjava.persist.model.User;
 
 import java.util.List;
 
+/**
+ * gkislin
+ * 27.10.2016
+ * <p>
+ * <p>
+ */
 @RegisterMapperFactory(EntityMapperFactory.class)
 public abstract class UserDao implements AbstractDao {
 
@@ -44,12 +50,12 @@ public abstract class UserDao implements AbstractDao {
     public abstract List<User> getWithLimit(@Bind int limit);
 
     //   http://stackoverflow.com/questions/13223820/postgresql-delete-all-content
-    @SqlUpdate("TRUNCATE users")
+    @SqlUpdate("TRUNCATE users CASCADE")
     @Override
     public abstract void clean();
 
     //    https://habrahabr.ru/post/264281/
-    @SqlBatch("INSERT INTO users (id, full_name, email, flag) VALUES (:id, :fullName, :email, CAST(:flag AS USER_FLAG))" +
+    @SqlBatch("INSERT INTO users (id, full_name, email, flag, city_id) VALUES (:id, :fullName, :email, CAST(:flag AS USER_FLAG), :cityId)" +
             "ON CONFLICT DO NOTHING")
 //            "ON CONFLICT (email) DO UPDATE SET full_name=:fullName, flag=CAST(:flag AS USER_FLAG)")
     public abstract int[] insertBatch(@BindBean List<User> users, @BatchChunkSize int chunkSize);

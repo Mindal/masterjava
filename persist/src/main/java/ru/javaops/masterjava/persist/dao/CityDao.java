@@ -1,44 +1,38 @@
 package ru.javaops.masterjava.persist.dao;
 
 import com.bertoncelj.jdbi.entitymapper.EntityMapperFactory;
+import one.util.streamex.StreamEx;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapperFactory;
 import ru.javaops.masterjava.persist.model.City;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @RegisterMapperFactory(EntityMapperFactory.class)
 public abstract class CityDao implements AbstractDao {
 
-
-    public City insert(City city) {
-        if (city.isNew()) {
-            int id = insertGeneratedId(city);
-            city.setId(id);
-        } else {
-            InsertWithId(city);
-        }
-        return city;
-    }
-
-    @SqlUpdate("INSERT INTO cities (code, description) VALUES (:code, :description) ")
-    @GetGeneratedKeys
-    abstract int insertGeneratedId(@BindBean City city);
-
-    @SqlUpdate("INSERT INTO cities (id, code, description) VALUES (:id, :code, :description) ")
-    abstract void InsertWithId(@BindBean City city);
-
-    @SqlQuery("SELECT * FROM cities WHERE code= :it")
-    public abstract City getByCode(@Bind String code);
-
-    @SqlQuery("SELECT * FROM cities")
-    public abstract List<City> findAll();
-
-
-
-    //   http://stackoverflow.com/questions/13223820/postgresql-delete-all-content
-    @SqlUpdate("TRUNCATE cities CASCADE")
+    @SqlUpdate("TRUNCATE city CASCADE ")
     @Override
     public abstract void clean();
 
+    @SqlQuery("SELECT * FROM city ORDER BY name")
+    public abstract List<City> getAll();
+
+    public Map<String, City> getAsMap() {
+        return StreamEx.of(getAll()).toMap(City::getRef, c -> c);
+    }
+
+    @SqlUpdate("INSERT INTO city (ref, name) VALUES (:ref, :name)")
+    @GetGeneratedKeys
+    public abstract int insertGeneratedId(@BindBean City city);
+
+    public void insert(City city) {
+        int id = insertGeneratedId(city);
+        city.setId(id);
+    }
+
+    @SqlBatch("INSERT INTO city (ref, name) VALUES (:ref, :name)")
+    public abstract void insertBatch(@BindBean Collection<City> cities);
 }

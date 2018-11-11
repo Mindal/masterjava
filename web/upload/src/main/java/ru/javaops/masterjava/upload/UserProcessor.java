@@ -93,18 +93,6 @@ public class UserProcessor {
         return failed;
     }
 
-    /**
-     * @param xmlUser user for getting city id
-     * @return city id if city is presents or else throw ImportException
-     * @throws ImportException
-     */
-    private int getCityId(ru.javaops.masterjava.xml.schema.User xmlUser) {
-        CityType city = ((CityType) xmlUser.getCity());
-        String code = city.getId();
-        return Optional.ofNullable(cityDao.getByCode(code))
-                .map(BaseEntity::getId)
-                .orElseThrow(() -> new ImportException("Not found city with code " + code));
-    }
 
     private void addChunkFutures(Map<String, Future<List<String>>> chunkFutures, List<User> chunk) {
         String emailRange = String.format("[%s-%s]", chunk.get(0).getEmail(), chunk.get(chunk.size() - 1).getEmail());

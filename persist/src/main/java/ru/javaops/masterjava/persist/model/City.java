@@ -2,21 +2,20 @@ package ru.javaops.masterjava.persist.model;
 
 import lombok.*;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
+@NoArgsConstructor
 @ToString(callSuper = true)
 public class City extends BaseEntity {
 
-    private @NonNull
-    String code;
+    @NonNull
+    private String ref;
+    @NonNull
+    private String name;
 
-    private @NonNull
-    String description;
-
-    public City(Integer id, String code, String description) {
-        this(code, description);
+    public City(Integer id, String ref, String name) {
+        this(ref, name);
         this.id = id;
     }
 }

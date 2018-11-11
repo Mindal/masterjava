@@ -11,6 +11,10 @@ import java.util.List;
 
 import static ru.javaops.masterjava.persist.UserTestData.FIST5_USERS;
 
+/**
+ * gkislin
+ * 27.10.2016
+ */
 public class UserDaoTest extends AbstractDaoTest<UserDao> {
 
     public UserDaoTest() {

@@ -9,6 +9,10 @@ import java.util.List;
 
 import static ru.javaops.masterjava.persist.CityTestData.*;
 
+/**
+ * gkislin
+ * 14.11.2016
+ */
 public class UserTestData {
     public static User ADMIN;
     public static User DELETED;
@@ -19,8 +23,8 @@ public class UserTestData {
     public static List<User> FIST5_USERS;
 
     public static void init() {
-        CityTestData.init();
-        ADMIN = new User("Admin", "admin@javaops.ru", UserFlag.superuser, KIEV.getId());
+        CityTestData.setUp();
+        ADMIN = new User("Admin", "admin@javaops.ru", UserFlag.superuser, SPB.getId());
         DELETED = new User("Deleted", "deleted@yandex.ru", UserFlag.deleted, SPB.getId());
         FULL_NAME = new User("Full Name", "gmail@gmail.com", UserFlag.active, KIEV.getId());
         USER1 = new User("User1", "user1@gmail.com", UserFlag.active, MOSCOW.getId());

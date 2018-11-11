@@ -1,16 +1,14 @@
 package ru.javaops.masterjava.persist.dao;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import ru.javaops.masterjava.persist.CityTestData;
 import ru.javaops.masterjava.persist.model.City;
 
-import java.util.List;
+import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static ru.javaops.masterjava.persist.CityTestData.CITIES;
 
 public class CityDaoTest extends AbstractDaoTest<CityDao> {
 
@@ -18,27 +16,15 @@ public class CityDaoTest extends AbstractDaoTest<CityDao> {
         super(CityDao.class);
     }
 
-    @BeforeClass
-    public static void setUp() {
-        CityTestData.init();
+    @Before
+    public void setUp() throws Exception {
+        CityTestData.setUp();
     }
 
     @Test
-    public void testFindAll() {
-        List<City> all = dao.findAll();
-        assertThat(all, equalTo(CityTestData.CITIES));
+    public void getAll() throws Exception {
+        final Map<String, City> cities = dao.getAsMap();
+        assertEquals(CITIES, cities);
+        System.out.println(cities.values());
     }
-
-    @Test
-    public void testGetByCode() {
-        City asdf = dao.getByCode("asdf");
-        assertThat(asdf, is(nullValue()));
-
-        City moscow = dao.getByCode("mow");
-        assertThat(moscow, equalTo(CityTestData.MOSCOW));
-    }
-
-
-
-
 }
