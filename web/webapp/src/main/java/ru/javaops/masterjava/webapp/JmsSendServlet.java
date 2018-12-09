@@ -1,7 +1,6 @@
 package ru.javaops.masterjava.webapp;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.javaops.masterjava.service.mail.util.MailUtils;
 import ru.javaops.masterjava.service.mail.util.MailUtils.MailObject;
 
 import javax.jms.*;
@@ -13,13 +12,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.IOException;
 import java.lang.IllegalStateException;
 
+import static ru.javaops.masterjava.webapp.WebUtil.doAndWriteResponse;
+
 @WebServlet("/sendJms")
 @Slf4j
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, //10 MB in memory limit
+        maxFileSize = 1024 * 1024 * 25)
 public class JmsSendServlet extends HttpServlet {
     private Connection connection;
     private Session session;
@@ -52,27 +53,8 @@ public class JmsSendServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String result;
-        try {
-            log.info("Start sending");
-            req.setCharacterEncoding("UTF-8");
-            resp.setCharacterEncoding("UTF-8");
-            Part filePart = req.getPart("attach");
-
-            MailObject mailObject = MailUtils.getMailObject(
-                    req.getParameter("users"),
-                    req.getParameter("subject"),
-                    req.getParameter("body"),
-                    filePart == null ? null : filePart.getSubmittedFileName(),
-                    filePart == null ? null : filePart.getInputStream());
-
-            result = sendJms(mailObject);
-            log.info("Processing finished with result: {}", result);
-        } catch (Exception e) {
-            log.error("Processing failed", e);
-            result = e.toString();
-        }
-        resp.getWriter().write(result);
+        req.setCharacterEncoding("UTF-8");
+        doAndWriteResponse(resp, () -> sendJms(WebUtil.createMailObject(req)));
     }
 
     private synchronized String sendJms(MailObject mailObject) throws JMSException {
